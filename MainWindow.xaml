@@ -1,0 +1,92 @@
+﻿<controls:MetroWindow x:Class="Update_FlipVIew_Source.MainWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Update_FlipVIew_Source"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" >
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionary1.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            
+            <StackPanel Margin="80,0,0,0" VerticalAlignment="Bottom">
+                <TextBlock  Text="Clash Navigator" HorizontalAlignment="Right"/>
+                <TextBlock  Text="{Binding App_Ver}" HorizontalAlignment="Right"/>
+            </StackPanel>
+            <Separator Foreground="Wheat" VerticalAlignment="Bottom" Margin="0,10,0,0"/>
+        </Grid>
+        <ListBox Grid.Row="1" x:Name="lbx" MinHeight="600"  ItemsSource="{Binding ClashNodes}" PreviewMouseWheel="disablewheel">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling"/>
+                </ItemsPanelTemplate>
+
+            </ListBox.ItemsPanel>
+
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+
+                    <StackPanel MaxWidth="200"  >
+                        <StackPanel.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Capture Image" Click="CaptureView"/>
+                            </ContextMenu>
+                        </StackPanel.ContextMenu>
+
+                        <StackPanel  >
+                            <CheckBox IsChecked="{Binding Noted}"/>
+                            <controls:FlipView  IsBannerEnabled="False" ToolTip="{Binding Innertext}" MouseOverGlowEnabled="False" MouseHoverBorderEnabled="False" ItemsSource="{Binding ImgViews}" Visibility="{Binding Imgvis}"  >
+
+
+                                <controls:FlipView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel VirtualizingPanel.VirtualizationMode="Recycling"/>
+                                    </ItemsPanelTemplate>
+                                </controls:FlipView.ItemsPanel>
+
+                                <controls:FlipView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel >
+
+                                            <Image Source="{Binding CImg}"   >
+                                                <Image.Effect>
+                                                    <DropShadowEffect BlurRadius="1" ShadowDepth="3" />
+                                                </Image.Effect>
+                                            </Image>
+
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </controls:FlipView.ItemTemplate>
+
+                            </controls:FlipView>
+
+                            <TextBlock  Text="{Binding  Innertext}" Visibility="{Binding Innertext_vis}" />
+                        </StackPanel>
+
+                       
+                    </StackPanel>
+
+
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+        </ListBox>
+
+      
+    </Grid>
+</controls:MetroWindow>
